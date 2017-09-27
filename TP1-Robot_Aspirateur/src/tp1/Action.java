@@ -1,8 +1,8 @@
 package tp1;
 
 public class Action {
-	static void seDeplacer() {
-		Effecteur.bouge();
+	static void seDeplacer(int x,int y) {
+		Effecteur.bouge(x,y);
 	}
 
 	static void aspirer() {
