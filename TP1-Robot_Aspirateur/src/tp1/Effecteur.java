@@ -1,13 +1,13 @@
 package tp1;
 
 public class Effecteur {
-	static void aspirer() {
+	static void aspire() {
 		
 	}
-	static void ramasser() {
+	static void ramasse() {
 		
 	}
-	static void bouger() {
+	static void bouge() {
 		
 	}
 }
