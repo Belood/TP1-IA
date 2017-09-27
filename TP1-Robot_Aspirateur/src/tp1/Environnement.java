@@ -6,10 +6,10 @@ import java.util.Random;
 
 public class Environnement implements Runnable {
 	
-	public int carte[][]= new int [10][10];
-	public static int poussiere = 1;
-	public static int bijoux = 2;
-	public static int performance = 0;
+	private static int carte[][]= new int [10][10];
+	private static int poussiere = 1;
+	private static int bijoux = 2;
+	private static int performance = 0;
 	
 	public void run() {
 		while(true) {
@@ -36,10 +36,10 @@ public class Environnement implements Runnable {
 			carte[nb][nb2]=3;
 		}
 		
-		System.out.println(Arrays.deepToString(carte));
+		//System.out.println(Arrays.deepToString(carte));
 		
 	}
-	public static int[][] voirCarte(int[][] carte) {
+	public static int[][] voirCarte() {
 		return carte;
 	}
 	/*public static void main(String[] args) {

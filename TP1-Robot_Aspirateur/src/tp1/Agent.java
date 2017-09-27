@@ -1,5 +1,7 @@
 package tp1;
 
+import java.util.Arrays;
+
 public class Agent implements Runnable {
 	private Capteur capteur = new Capteur();
 	private Effecteur effecteur = new Effecteur();
@@ -8,7 +10,13 @@ public class Agent implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
-			capteur.observer(environnement)
+			BDI.updateBelieve(Capteur.observer());
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}

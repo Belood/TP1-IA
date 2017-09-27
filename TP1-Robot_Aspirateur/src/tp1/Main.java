@@ -5,6 +5,7 @@ public class Main {
 		Thread agent = new Thread(new Agent());
 		Thread environnement = new Thread(new Environnement());
 		
-		
+		environnement.start();
+		agent.start();
 	}
 }
