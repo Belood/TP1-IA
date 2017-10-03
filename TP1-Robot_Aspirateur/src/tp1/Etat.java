@@ -3,9 +3,9 @@ package tp1;
 import java.util.Vector;
 
 public class Etat {
-	private static Vector<Object> croyance = new Vector<Object>();
-	private static Vector<Object> desir = new Vector<Object>();
-	private static Vector<Action> intention;
+	private Vector<Object> croyance = new Vector<Object>();
+	private Vector<Object> desir = new Vector<Object>();
+	private Vector<Action> intention;
 
 	Etat() {
 		this.croyance.add(new int[10][10]);
@@ -16,17 +16,18 @@ public class Etat {
 		this.intention = new Vector<Action>();
 
 	}
+	
 
-	private static void updateCroyance(Vector<Object> obs) {
+	private void updateCroyance(Vector<Object> obs) {
 		croyance.clear();
 		croyance = obs;
 	}
 
-	private static void updateDesir() {
+	private void updateDesir() {
 
 	}
 
-	private static void updateIntention() {
+	private void updateIntention() {
 
 	}
 
