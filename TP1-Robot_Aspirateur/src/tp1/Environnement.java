@@ -35,12 +35,12 @@ public class Environnement implements Runnable {
 		return y;
 	}
 	
-	public static void setX(int x) {
-		Environnement.x=x;
+	public synchronized static void setX(int valeur) {
+		x=valeur;
 	}
 	
-	public static void setY(int y) {
-		Environnement.y=y;
+	public synchronized static void setY(int valeur) {
+		y=valeur;
 	}
 	
 	public void genererElement(int[][] carte) {
@@ -59,10 +59,10 @@ public class Environnement implements Runnable {
 			carte[nb][nb2]=3;
 		}
 		
-		System.out.println(Arrays.deepToString(carte));
+		//System.out.println(Arrays.deepToString(carte));
 		
 	}
-	public static int[][] voirCarte() {
+	public synchronized static int[][] voirCarte() {
 		return carte;
 	}
 	

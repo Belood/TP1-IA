@@ -1,5 +1,6 @@
 package tp1;
 
+import java.util.Arrays;
 import java.util.Vector;
 
 public class Capteur {
@@ -10,12 +11,13 @@ public class Capteur {
 	public static Vector<Object> observer() {
 		Vector<Object> obs = new Vector<Object>();
 		obs.add(carte());
+		System.out.println(Arrays.deepToString(carte()));
 		obs.add(positionX());
 		obs.add(positionY());
 		return obs;
 	}
 
-	private static int[][] carte() {
+	private synchronized static int[][] carte() {
 		return Environnement.voirCarte();
 	}
 
@@ -27,5 +29,5 @@ public class Capteur {
 	private static int positionY() {
 		return Environnement.getY();
 	}
-
+	
 }
