@@ -3,15 +3,17 @@ package tp1;
 public class Position {
 	private int x;
 	private int y;
-	private int distance;
+	private int distance; 
+	private String objet; // 1 = Poussiere 2= Bijoux, 3=les deux
 	
-	public Position(int x,int y) {
+	public Position(int x,int y,String objet,int distance) {
 		this.x=x;
 		this.y=y;
-		this.distance = 0;
+		this.objet=objet;
+		this.distance=distance;
 	}
-	public static int calculDistance(Position a, Position b) {
-		return Math.abs((a.x-b.x)+(a.y-b.y));
+	public int  calculDistance(Position compare) {
+		return Math.abs((this.x-compare.x)+(this.y-compare.y));
 	}
 	
 	public void setDistance(int distance) {
@@ -28,5 +30,10 @@ public class Position {
 		return this.y;
 	}
 	
+	@Override 
+	public String toString() {
+		String text="Position X: "+this.x+" Y: "+this.y+" Objet: "+this.objet + " distance: "+distance;
+		return text;
+	}
 	
 }
