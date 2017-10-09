@@ -19,13 +19,14 @@ public class Agent implements Runnable {
 	@Override
 	public void run() {
 		while (isAlive) {
-			BDI.updateEtat(Capteur.observer());
-			Vector<Position> positions= BDI.trouverPositionTruc();
-			Vector<GraphNode> init=creerNodes(positions);
-			DFS(init.get(0));
-
+			BDI.updateEtat(Capteur.observer ());
+			Vector<Position> positions = BDI.trouverPositionTruc();
+			List<Noeud> solution=creerArbre(positions);
+			for(Noeud noeud : solution) {
+				noeud.show();
+			}
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(2500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -34,38 +35,42 @@ public class Agent implements Runnable {
 
 	}
 
-	public Vector<GraphNode> creerNodes(Vector<Position> positions) {
-		GraphNode node = new GraphNode(positions.get(0));
-		Vector<GraphNode> graph = new Vector<GraphNode>();
-		graph.add(node);
-		for (int i = 1; i < positions.size(); i++) {
-			graph.add(new GraphNode(positions.get(i)));
-		}
-		Vector<GraphNode> voisins = new Vector<GraphNode>();
-		for (int k = 0; k < graph.size(); k++) {
-			if (!node.equals(graph.get(k))) {
-				Position current = node.position;
-				Position compare = graph.get(k).position;
-				int distance = current.calculDistance(compare);
-				graph.get(k).position.setDistance(distance);
-				voisins.add(graph.get(k));
+	public List<Noeud> DFS(Noeud noeud, Vector<Position> positions, Vector<Position> addedPosition,List<Noeud> solution) {
+		
+		for (Position position : positions) {
+			if (!addedPosition.contains(position)) {
+				Noeud enfant = new Noeud(position);
+				enfant.setParent(noeud);
+				noeud.addEnfant(enfant);
+				addedPosition.add(position);
+				solution.add(enfant);
+				DFS(enfant, positions, addedPosition,solution);
+				
 			}
+			
+			
 		}
-		node.neighbors = voisins;
-		for (int n = 0; n < node.neighbors.size(); n++) {
-			System.out.println(node.neighbors.get(n).position.toString()); // Affiche les voisins du node courant
-		}
-
-		return graph;
+		return solution;
+		//addedPosition.clear();
+		
+	}
+	
+	public List<Noeud> creerArbre(Vector<Position> positions) {
+		Noeud racine=new Noeud(positions.get(0));
+		Vector<Position> addedPosition=new Vector<Position>();
+		addedPosition.add(positions.get(0));
+		List<Noeud> solution=new Vector<Noeud>();
+		DFS(racine,positions,addedPosition,solution);
+		return solution;
 	}
 
 	// Algorithme exploration non informée, recherche en profondeur
-	private void DFS(GraphNode graph) {
-		Stack<GraphNode> stack = new Stack<GraphNode>();
+	/*private void DFS(Arbre graph) {
+		Stack<Arbre> stack = new Stack<Arbre>();
 		stack.push(graph);
 		while (!stack.isEmpty()) {
-			GraphNode v = stack.pop();
-			GraphNode choix=v;
+			Arbre v = stack.pop();
+			Arbre choix = v;
 			if (!v.visited) {
 				System.out.println(graph.position.toString());
 				for (int n = 0; n < graph.neighbors.size(); n++) {
@@ -80,15 +85,15 @@ public class Agent implements Runnable {
 						// On enregistre le node le plus proche
 					}
 				}
-			choix.neighborsUpdate();
-			stack.push(choix);
+				choix.neighborsUpdate();
+				stack.push(choix);
 			}
 		}
 	}
-	
-	private void DFSReccursif(GraphNode node) {
+
+	private void DFSReccursif(Arbre node) {
 		node.visited = true;
-		GraphNode choix= node;
+		Arbre choix = node;
 		choix.neighborsUpdate();
 		int min = node.neighbors.get(0).position.getDistance();
 		System.out.println(choix.position.toString());
@@ -98,11 +103,11 @@ public class Agent implements Runnable {
 				// On enregistre le node le plus proche
 			}
 		}
-		
+
 		DFSReccursif(choix);
 	}
 
-	private void display(Vector<GraphNode> graph) {
+	private void display(Vector<Arbre> graph) {
 		System.out.println(graph.get(0).position.toString());
-	}
+	}*/
 }
