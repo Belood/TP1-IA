@@ -37,7 +37,8 @@ public class Agent implements Runnable {
 	public Vector<GraphNode> creerNodes(Vector<Position> positions) {
 		GraphNode node = new GraphNode(positions.get(0));
 		Vector<GraphNode> graph = new Vector<GraphNode>();
-		for (int i = 0; i < positions.size(); i++) {
+		graph.add(node);
+		for (int i = 1; i < positions.size(); i++) {
 			graph.add(new GraphNode(positions.get(i)));
 		}
 		Vector<GraphNode> voisins = new Vector<GraphNode>();

@@ -34,6 +34,9 @@ public class Environnement implements Runnable {
 	public static int getY() {
 		return y;
 	}
+	public static int getPerf() {
+		return performance;
+	}
 	
 	public synchronized static void setX(int valeur) {
 		x=valeur;
@@ -66,10 +69,11 @@ public class Environnement implements Runnable {
 		return carte;
 	}
 	
-	public static void testAspire() {
+	public static synchronized void testAspire() {
 		switch(carte[x][y]) {
 		case 0 :
 			System.out.println("Aspire case vide");
+			performance++;
 			break;
 		case 1 :
 			System.out.println("bravo! poussiere ramassée");
@@ -77,22 +81,27 @@ public class Environnement implements Runnable {
 			break;
 		case 2 :
 			System.out.println("bijoux aspiré :/");
+			performance++;
 			carte[x][y]=0;
 			break;
 		case 3 :
 			System.out.println("de la poussiere et des bijoux ont été aspirés :/");
 			carte[x][y]=0;
+			performance++;
 			break;
 		}
+		performance++;
 	}
 	
-	public static void testRamasse() {
+	public static synchronized void testRamasse() {
 		switch(carte[x][y]) {
 		case 0 :
 			System.out.println("Ramasse case vide");
+			performance++;
 			break;
 		case 1 :
 			System.out.println("ramassage de poussiere :/");
+			performance++;
 			carte[x][y]=0;
 			break;
 		case 2 :
@@ -101,9 +110,16 @@ public class Environnement implements Runnable {
 			break;
 		case 3 :
 			System.out.println("bravo! bijoux ramassé mais il reste de la poussiere");
+			performance++;
 			carte[x][y]=1;
 			break;
 		}
+		performance++;
+	}
+
+	public static void addCout(int cout2) {
+		performance+=cout2;
+		
 	}
 	
 	

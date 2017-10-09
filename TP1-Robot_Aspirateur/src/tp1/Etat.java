@@ -48,6 +48,7 @@ public class Etat {
 				case 3:
 					Position poussiereEtBijoux=new Position(i, j, "Poussiere et Bijoux",0);
 					liste_position.add(poussiereEtBijoux);
+					break;
 					//System.out.println(poussiereEtBijoux.toString());
 				}
 			}

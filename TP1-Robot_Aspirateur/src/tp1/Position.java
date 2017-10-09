@@ -22,6 +22,9 @@ public class Position {
 	public int getDistance() {
 		return this.distance;
 	}
+	public String getObjet() {
+		return this.objet;
+	}
 	
 	public int getX() {
 		return this.x;
