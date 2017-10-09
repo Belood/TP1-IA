@@ -13,7 +13,7 @@ public class Position {
 		this.distance=distance;
 	}
 	public int  calculDistance(Position compare) {
-		return Math.abs((this.x-compare.x)+(this.y-compare.y));
+		return Math.abs(this.x-compare.x)+Math.abs(this.y-compare.y);
 	}
 	
 	public void setDistance(int distance) {

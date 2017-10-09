@@ -62,7 +62,7 @@ public class Environnement implements Runnable {
 			carte[nb][nb2]=3;
 		}
 		
-		//System.out.println(Arrays.deepToString(carte));
+		
 		
 	}
 	public synchronized static int[][] voirCarte() {
@@ -70,55 +70,68 @@ public class Environnement implements Runnable {
 	}
 	
 	public static synchronized void testAspire() {
+		System.out.println(Arrays.deepToString(carte));
 		switch(carte[x][y]) {
 		case 0 :
 			System.out.println("Aspire case vide");
-			performance++;
+			performance--;
 			break;
 		case 1 :
 			System.out.println("bravo! poussiere ramassée");
 			carte[x][y]=0;
+			performance+=2;
 			break;
 		case 2 :
 			System.out.println("bijoux aspiré :/");
-			performance++;
+			performance--;
 			carte[x][y]=0;
 			break;
 		case 3 :
 			System.out.println("de la poussiere et des bijoux ont été aspirés :/");
 			carte[x][y]=0;
-			performance++;
+			performance--;
 			break;
 		}
-		performance++;
+		performance--;
+	//	System.out.println("cout :" + performance);
+		System.out.println(Arrays.deepToString(carte));
 	}
 	
 	public static synchronized void testRamasse() {
+		System.out.println(Arrays.deepToString(carte));
 		switch(carte[x][y]) {
 		case 0 :
 			System.out.println("Ramasse case vide");
-			performance++;
+			performance--;
 			break;
 		case 1 :
 			System.out.println("ramassage de poussiere :/");
-			performance++;
+			performance--;
 			carte[x][y]=0;
 			break;
 		case 2 :
 			System.out.println("bravo! bijoux ramassé");
 			carte[x][y]=0;
+			performance+=3;
 			break;
 		case 3 :
 			System.out.println("bravo! bijoux ramassé mais il reste de la poussiere");
-			performance++;
+			performance+=3;
 			carte[x][y]=1;
 			break;
 		}
-		performance++;
+		performance--;
+		//System.out.println("cout :" + performance);
+		System.out.println(Arrays.deepToString(carte));
 	}
 
 	public static void addCout(int cout2) {
-		performance+=cout2;
+		performance-=cout2;
+		
+	}
+
+	public static synchronized void setPerf() {
+		performance=0;
 		
 	}
 	

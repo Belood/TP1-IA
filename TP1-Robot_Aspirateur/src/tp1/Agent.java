@@ -18,14 +18,19 @@ public class Agent implements Runnable {
 
 	@Override
 	public void run() {
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		while (isAlive) {
 			BDI.updateEtat(Capteur.observer());
 			Vector<Position> positions= BDI.trouverPositionTruc();
 			Vector<GraphNode> init=creerNodes(positions);
-			DFS(init.get(0));
-
+			Effecteur.work(init);//DFS(init.get(0));
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -52,9 +57,9 @@ public class Agent implements Runnable {
 			}
 		}
 		node.neighbors = voisins;
-		for (int n = 0; n < node.neighbors.size(); n++) {
+		/*for (int n = 0; n < node.neighbors.size(); n++) {
 			System.out.println(node.neighbors.get(n).position.toString()); // Affiche les voisins du node courant
-		}
+		}*/
 
 		return graph;
 	}
@@ -67,9 +72,9 @@ public class Agent implements Runnable {
 			GraphNode v = stack.pop();
 			GraphNode choix=v;
 			if (!v.visited) {
-				System.out.println(graph.position.toString());
+				//System.out.println(graph.position.toString());
 				for (int n = 0; n < graph.neighbors.size(); n++) {
-					System.out.println(graph.neighbors.get(n).position.toString()); // Affiche les voisins du node
+					//System.out.println(graph.neighbors.get(n).position.toString()); // Affiche les voisins du node
 																					// courant
 				}
 				v.visited = true;
@@ -91,7 +96,7 @@ public class Agent implements Runnable {
 		GraphNode choix= node;
 		choix.neighborsUpdate();
 		int min = node.neighbors.get(0).position.getDistance();
-		System.out.println(choix.position.toString());
+		//System.out.println(choix.position.toString());
 		for (int i = 0; i < node.neighbors.size(); i++) {
 			if (node.neighbors.get(i).position.getDistance() < min) {
 				choix = node.neighbors.get(i);
