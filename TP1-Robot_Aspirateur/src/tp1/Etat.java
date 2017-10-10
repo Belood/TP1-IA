@@ -5,7 +5,7 @@ import java.util.Vector;
 public class Etat {
 	private Vector<Object> croyance = new Vector<Object>();
 	private Vector<Object> desir = new Vector<Object>();
-	private Vector<Action> intention = new Vector<Action>();
+	private Vector<Noeud> intention = new Vector<Noeud>();
 	
 	private void updateCroyance(Vector<Object> obs) {
 		croyance.clear();

@@ -19,19 +19,19 @@ public class Agent implements Runnable {
 	@Override
 	public void run() {
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(4000);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		while (isAlive) {
 
-			BDI.updateEtat(Capteur.observer());
+			BDI.updateEtat(capteur.observer());
 			Vector<Position> positions = BDI.trouverPositionTruc();
-			List<Noeud> solution = creerArbre(positions);
-			Effecteur.work(solution);// DFS(init.get(0));
+			Vector<Noeud> solution = creerArbre(positions);
+			effecteur.work(solution);// DFS(init.get(0));
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(4000);
 
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -41,8 +41,8 @@ public class Agent implements Runnable {
 
 	}
 
-	public List<Noeud> DFS(Noeud noeud, Vector<Position> positions, Vector<Position> addedPosition,
-			List<Noeud> solution) {
+	public Vector<Noeud> DFS(Noeud noeud, Vector<Position> positions, Vector<Position> addedPosition,
+			Vector<Noeud> solution) {
 
 		for (Position position : positions) {
 			if (!addedPosition.contains(position)) {
@@ -58,11 +58,12 @@ public class Agent implements Runnable {
 		return solution;
 	}
 
-	public List<Noeud> creerArbre(Vector<Position> positions) {
+	public Vector<Noeud> creerArbre(Vector<Position> positions) {
 		Noeud racine = new Noeud(positions.get(0));
 		Vector<Position> addedPosition = new Vector<Position>();
 		addedPosition.add(positions.get(0));
-		List<Noeud> solution = new Vector<Noeud>();
+		Vector<Noeud> solution = new Vector<Noeud>();
+		solution.add(racine);
 		DFS(racine, positions, addedPosition, solution);
 		return solution;
 	}

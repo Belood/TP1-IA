@@ -40,6 +40,6 @@ public class Noeud {
 	 }
 	 
 	 public void show() {
-		 System.out.println(position.getId()+ "parent : "+this.parent.position.getId());
+		 System.out.println(position.getId());
 	 }
 }

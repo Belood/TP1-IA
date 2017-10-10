@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Vector;
 
 public class Effecteur {
-	public static synchronized void work (List<Noeud> graph) {
+	public synchronized void work (Vector<Noeud> graph) {
 		for(int i =1;i<graph.size();i++) {
 			int cout = graph.get(i-1).position.calculDistance(graph.get(i).position);
+			
 			//System.out.println("nb d'elements : " + (graph.size()-1));
 			System.out.println("distance : " + cout);
 			bouge(graph.get(i).position.getX(),graph.get(i).position.getY(),cout);

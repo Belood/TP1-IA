@@ -8,7 +8,7 @@ public class Capteur {
 	/*
 	 * static int getPerformance(Environnement env) { return env.getperformance(); }
 	 */
-	public static Vector<Object> observer() {
+	public  Vector<Object> observer() {
 		Vector<Object> obs = new Vector<Object>();
 		obs.add(carte());
 		//System.out.println(Arrays.deepToString(carte()));
