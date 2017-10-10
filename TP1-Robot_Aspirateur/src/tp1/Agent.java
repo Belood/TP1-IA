@@ -28,7 +28,8 @@ public class Agent implements Runnable {
 
 			BDI.updateEtat(capteur.observer());
 			Vector<Position> positions = BDI.trouverPositionTruc();
-			Vector<Noeud> solution = creerArbre(positions);
+			//Vector<Noeud> solution = creerArbre(positions);
+			Vector<Noeud> solution = creerArbreBFS(positions);
 			effecteur.work(solution);// DFS(init.get(0));
 			try {
 				Thread.sleep(4000);
@@ -65,6 +66,43 @@ public class Agent implements Runnable {
 		Vector<Noeud> solution = new Vector<Noeud>();
 		solution.add(racine);
 		DFS(racine, positions, addedPosition, solution);
+		return solution;
+	}
+	
+	public Vector<Noeud> BFS(Noeud noeud, Vector<Position> positions, Vector<Position> addedPosition,
+			Vector<Noeud> solution) {
+		
+		int heuristique = 20;
+		int min=0;
+		for (int i=1;i<positions.size();i++) {
+			if (!addedPosition.contains(positions.get(i))) {
+				if(positions.get(i).calculDistance(noeud.position) < heuristique) {
+						heuristique=positions.get(i).calculDistance(noeud.position);
+						min = i;
+				}
+				
+			}
+		}
+			if( addedPosition.size()<positions.size()) {
+				Noeud enfant = new Noeud(positions.get(min));
+				enfant.setParent(noeud);
+				noeud.addEnfant(enfant);
+				addedPosition.add(positions.get(min));
+				solution.add(enfant);
+				//enfant.show();
+				BFS(enfant, positions, addedPosition, solution);
+
+			}
+		
+		return solution;
+	}
+	public Vector<Noeud> creerArbreBFS(Vector<Position> positions) {
+		Noeud racine = new Noeud(positions.get(0));
+		Vector<Position> addedPosition = new Vector<Position>();
+		addedPosition.add(positions.get(0));
+		Vector<Noeud> solution = new Vector<Noeud>();
+		solution.add(racine);
+		BFS(racine, positions, addedPosition, solution);
 		return solution;
 	}
 

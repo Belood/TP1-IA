@@ -19,7 +19,7 @@ public class Environnement implements Runnable {
 		//testAspire();
 		//testRamasse();
 		try {
-			Thread.sleep(100);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,17 +79,17 @@ public class Environnement implements Runnable {
 		case 1 :
 			System.out.println("bravo! poussiere ramassée");
 			carte[x][y]=0;
-			performance+=2;
+			performance+=10;
 			break;
 		case 2 :
 			System.out.println("bijoux aspiré :/");
-			performance--;
+			performance-=10;
 			carte[x][y]=0;
 			break;
 		case 3 :
 			System.out.println("de la poussiere et des bijoux ont été aspirés :/");
 			carte[x][y]=0;
-			performance--;
+			performance-=10;
 			break;
 		}
 		performance--;
@@ -112,11 +112,11 @@ public class Environnement implements Runnable {
 		case 2 :
 			System.out.println("bravo! bijoux ramassé");
 			carte[x][y]=0;
-			performance+=3;
+			performance+=10;
 			break;
 		case 3 :
 			System.out.println("bravo! bijoux ramassé mais il reste de la poussiere");
-			performance+=3;
+			performance+=10;
 			carte[x][y]=1;
 			break;
 		}
