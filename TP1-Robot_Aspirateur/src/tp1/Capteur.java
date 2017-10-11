@@ -14,6 +14,7 @@ public class Capteur {
 		//System.out.println(Arrays.deepToString(carte()));
 		obs.add(positionX());
 		obs.add(positionY());
+		obs.addElement(performance());
 		return obs;
 	}
 
@@ -30,4 +31,7 @@ public class Capteur {
 		return Environnement.getY();
 	}
 	
+	private static int performance() {
+		return Environnement.getPerformance();
+	}
 }

@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Vector;
 
 public class Effecteur {
-	public synchronized void work (Vector<Noeud> graph) {
-		for(int i =1;i<graph.size();i++) {
-			int cout = graph.get(i-1).position.calculDistance(graph.get(i).position);
+	public synchronized void work (Vector<Noeud> intentions) {
+		for(int i =1;i<intentions.size();i++) {
+			int cout = intentions.get(i-1).position.calculDistance(intentions.get(i).position);
 			
-			//System.out.println("nb d'elements : " + (graph.size()-1));
+			//System.out.println("nb d'elements : " + (intentions.size()-1));
 			System.out.println("distance : " + cout);
-			bouge(graph.get(i).position.getX(),graph.get(i).position.getY(),cout);
-			switch(graph.get(i).position.getObjet()) {
+			bouge(intentions.get(i).position.getX(),intentions.get(i).position.getY(),cout);
+			switch(intentions.get(i).position.getObjet()) {
 			case "Poussiere" :
 				aspire();
 				break;

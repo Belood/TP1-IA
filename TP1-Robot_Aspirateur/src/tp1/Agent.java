@@ -26,11 +26,13 @@ public class Agent implements Runnable {
 		}
 		while (isAlive) {
 
-			BDI.updateEtat(capteur.observer());
+			BDI.updateCroyance(capteur.observer());
+			BDI.updateDesir();
 			Vector<Position> positions = BDI.trouverPositionTruc();
-			//Vector<Noeud> solution = creerArbre(positions);
-			Vector<Noeud> solution = creerArbreBFS(positions);
-			effecteur.work(solution);// DFS(init.get(0));
+			Vector<Noeud> solution = creerArbreDFS(positions);
+			//Vector<Noeud> solution = creerArbreBFS(positions);
+			BDI.updateIntention(solution);
+			effecteur.work(BDI.exprimerIntention());// DFS(init.get(0));
 			try {
 				Thread.sleep(4000);
 
@@ -59,7 +61,7 @@ public class Agent implements Runnable {
 		return solution;
 	}
 
-	public Vector<Noeud> creerArbre(Vector<Position> positions) {
+	public Vector<Noeud> creerArbreDFS(Vector<Position> positions) {
 		Noeud racine = new Noeud(positions.get(0));
 		Vector<Position> addedPosition = new Vector<Position>();
 		addedPosition.add(positions.get(0));

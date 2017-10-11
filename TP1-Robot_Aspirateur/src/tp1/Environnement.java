@@ -6,20 +6,24 @@ import java.util.Random;
 
 public class Environnement implements Runnable {
 	
-	private static int carte[][]= new int [10][10];
+	private static int carte[][]= new int[10][10]; 
+	//{{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 0, 0, 0, 1, 1, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 2, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 2, 0, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 2, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0, 0}};
 	private static int poussiere = 1;
 	private static int bijoux = 2;
 	private static int performance = 0;
 	private static int x = 0;
 	private static int y = 0;
 	
+	public Environnement() {
+		super();
+	}
 	public void run() {
 		while(true) {
-		genererElement(carte);
+		//genererElement(carte);
 		//testAspire();
 		//testRamasse();
 		try {
-			Thread.sleep(10);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,6 +70,7 @@ public class Environnement implements Runnable {
 		
 	}
 	public synchronized static int[][] voirCarte() {
+		System.out.println(Arrays.deepToString(carte));
 		return carte;
 	}
 	
@@ -133,6 +138,10 @@ public class Environnement implements Runnable {
 	public static synchronized void setPerf() {
 		performance=0;
 		
+	}
+	
+	public  static synchronized int getPerformance() {
+		return performance;
 	}
 	
 	

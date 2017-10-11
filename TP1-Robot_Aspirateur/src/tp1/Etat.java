@@ -7,23 +7,25 @@ public class Etat {
 	private Vector<Object> desir = new Vector<Object>();
 	private Vector<Noeud> intention = new Vector<Noeud>();
 	
-	private void updateCroyance(Vector<Object> obs) {
+	public void updateCroyance(Vector<Object> obs) {
 		croyance.clear();
 		croyance = obs;
+		
 	}
 
-	private void updateDesir() {
+	public void updateDesir() {
+		int maisonPropre[][]=new int[10][10];
+		desir.add(maisonPropre);
+		int meilleurePerf=(int) croyance.get(3)+1;
+		desir.add(meilleurePerf);
+		}
 
+	public void updateIntention(Vector<Noeud> solution) {
+		this.intention=solution;
 	}
-
-	private void updateIntention() {
-
-	}
-
-	public void updateEtat(Vector<Object> obs) {
-		updateCroyance(obs);
-		updateDesir();
-		updateIntention();
+	
+	public Vector<Noeud> exprimerIntention(){
+		return this.intention;
 	}
 
 	public Vector<Position> trouverPositionTruc() {
