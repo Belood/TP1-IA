@@ -10,6 +10,7 @@ public class Etat {
 	public void updateCroyance(Vector<Object> obs) {
 		croyance.clear();
 		croyance = obs;
+		
 	}
 
 	public boolean updateDesir(int elem, int eval, int perf) {
@@ -32,9 +33,13 @@ public class Etat {
 		return choix;
 	}
 
+
 	public void updateIntention(Vector<Noeud> solution) {
-		intention.clear();
-		intention = solution;
+		this.intention=solution;
+	}
+	
+	public Vector<Noeud> exprimerIntention(){
+		return this.intention;
 	}
 
 	/*

@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class Environnement implements Runnable {
 
+
 	private static int carte[][] = new int[10][10];
 	// private static int poussiere = 1;
 	// private static int bijoux = 2;
@@ -23,6 +24,7 @@ public class Environnement implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	
 		}
 	}
 
@@ -64,6 +66,7 @@ public class Environnement implements Runnable {
 	}
 
 	public synchronized static int[][] voirCarte() {
+
 		//System.out.println(Arrays.deepToString(carte));
 		return carte;
 	}
@@ -134,11 +137,16 @@ public class Environnement implements Runnable {
 
 	}
 
-	/*
-	 * public static void main(String[] args) {
-	 * 
-	 * genererElement(carte); System.out.println(Arrays.deepToString(carte));
-	 * 
-	 * }
-	 */
+	
+	public  static synchronized int getPerformance() {
+		return performance;
+	}
+	
+	
+	/*public static void main(String[] args) {
+		 
+		genererElement(carte);
+		System.out.println(Arrays.deepToString(carte));
+
+	}*/
 }

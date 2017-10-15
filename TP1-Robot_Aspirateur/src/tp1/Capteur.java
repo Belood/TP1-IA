@@ -13,6 +13,7 @@ public class Capteur {
 		// System.out.println(Arrays.deepToString(carte()));
 		obs.add(positionX());
 		obs.add(positionY());
+		obs.addElement(perf());
 		return obs;
 	}
 
@@ -29,6 +30,7 @@ public class Capteur {
 		return Environnement.getY();
 	}
 
+
 	public synchronized int perf() {
 		int i = Environnement.getPerf();
 		System.out.println("performance: " + i);
@@ -36,5 +38,6 @@ public class Capteur {
 		return i;
 
 	}
+
 
 }
