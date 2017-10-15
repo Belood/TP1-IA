@@ -19,7 +19,7 @@ public class Environnement implements Runnable {
 			// testAspire();
 			// testRamasse();
 			try {
-				Thread.sleep(100);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -72,6 +72,7 @@ public class Environnement implements Runnable {
 	}
 
 	public static synchronized void testAspire() {
+		//System.out.println(Arrays.deepToString(carte));
 		// System.out.println(Arrays.deepToString(carte));
 		switch (carte[x][y]) {
 		case 0:
@@ -96,7 +97,7 @@ public class Environnement implements Runnable {
 		}
 		performance--;
 		// System.out.println("cout :" + performance);
-		 System.out.println(Arrays.deepToString(carte));
+		 
 	}
 
 	public static synchronized void testRamasse() {
@@ -124,7 +125,7 @@ public class Environnement implements Runnable {
 		}
 		performance--;
 		// System.out.println("cout :" + performance);
-		 System.out.println(Arrays.deepToString(carte));
+		 //System.out.println(Arrays.deepToString(carte));
 	}
 
 	public static void addCout(int cout2) {
