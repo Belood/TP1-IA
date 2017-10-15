@@ -24,7 +24,7 @@ public class Noeud {
 		 if (enfants == null) {
 	            enfants = new ArrayList<Noeud>();
 	        }
-	        enfants.add(enfant);
+		enfants.add(enfant);
 	 }
 	 
 	 public Position getPosition() {

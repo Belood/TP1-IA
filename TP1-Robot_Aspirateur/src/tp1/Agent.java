@@ -18,21 +18,24 @@ public class Agent implements Runnable {
 
 	@Override
 	public void run() {
-		try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		/*
+		 * try { Thread.sleep(4000); } catch (InterruptedException e1) { // TODO
+		 * Auto-generated catch block e1.printStackTrace(); }
+		 */
 		while (isAlive) {
 
-			BDI.updateEtat(capteur.observer());
+			BDI.updateCroyance(capteur.observer());
 			Vector<Position> positions = BDI.trouverPositionTruc();
-			//Vector<Noeud> solution = creerArbre(positions);
+			// Vector<Noeud> solution = creerArbre(positions);
 			Vector<Noeud> solution = creerArbreBFS(positions);
-			effecteur.work(solution);// DFS(init.get(0));
+			BDI.updateIntention(solution);
+
+			if (BDI.updateDesir(solution.size(),testPerf(solution),capteur.perf())) {
+				effecteur.work(solution);
+				
+			}
 			try {
-				Thread.sleep(4000);
+				Thread.sleep(1000);
 
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -40,6 +43,15 @@ public class Agent implements Runnable {
 			}
 		}
 
+	}
+
+	public int testPerf(Vector<Noeud> solution) {
+
+		int distance = 0;
+		for (int i = 0; i < solution.size() - 1; i++) {
+			distance += solution.get(i).position.calculDistance(solution.get(i + 1).position);
+		}
+		return distance;
 	}
 
 	public Vector<Noeud> DFS(Noeud noeud, Vector<Position> positions, Vector<Position> addedPosition,
@@ -68,34 +80,35 @@ public class Agent implements Runnable {
 		DFS(racine, positions, addedPosition, solution);
 		return solution;
 	}
-	
+
 	public Vector<Noeud> BFS(Noeud noeud, Vector<Position> positions, Vector<Position> addedPosition,
 			Vector<Noeud> solution) {
-		
+
 		int heuristique = 20;
-		int min=0;
-		for (int i=1;i<positions.size();i++) {
+		int min = 0;
+		for (int i = 1; i < positions.size(); i++) {
 			if (!addedPosition.contains(positions.get(i))) {
-				if(positions.get(i).calculDistance(noeud.position) < heuristique) {
-						heuristique=positions.get(i).calculDistance(noeud.position);
-						min = i;
+				if (positions.get(i).calculDistance(noeud.position) < heuristique) {
+					heuristique = positions.get(i).calculDistance(noeud.position);
+					min = i;
 				}
-				
-			}
-		}
-			if( addedPosition.size()<positions.size()) {
-				Noeud enfant = new Noeud(positions.get(min));
-				enfant.setParent(noeud);
-				noeud.addEnfant(enfant);
-				addedPosition.add(positions.get(min));
-				solution.add(enfant);
-				//enfant.show();
-				BFS(enfant, positions, addedPosition, solution);
 
 			}
-		
+		}
+		if (addedPosition.size() < positions.size()) {
+			Noeud enfant = new Noeud(positions.get(min));
+			enfant.setParent(noeud);
+			noeud.addEnfant(enfant);
+			addedPosition.add(positions.get(min));
+			solution.add(enfant);
+			// enfant.show();
+			BFS(enfant, positions, addedPosition, solution);
+
+		}
+
 		return solution;
 	}
+
 	public Vector<Noeud> creerArbreBFS(Vector<Position> positions) {
 		Noeud racine = new Noeud(positions.get(0));
 		Vector<Position> addedPosition = new Vector<Position>();
