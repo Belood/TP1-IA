@@ -1,6 +1,7 @@
 package tp1;
 
-import java.util.*;
+import java.util.Random;
+import java.util.Vector;
 
 public class Agent implements Runnable {
 	private Capteur capteur;
@@ -22,22 +23,43 @@ public class Agent implements Runnable {
 		 * try { Thread.sleep(4000); } catch (InterruptedException e1) { // TODO
 		 * Auto-generated catch block e1.printStackTrace(); }
 		 */
+		int sleepTime = 0;
+		int perturbation=1000;
+		boolean converge = false;
+		//int range=500;
 		while (isAlive) {
-
+			//System.out.println("plusOuMoins : " +plusOuMoins);
 			BDI.updateCroyance(capteur.observer());
-
 			Vector<Position> positions = BDI.trouverPositionTruc();
 			// Vector<Noeud> solution = creerArbre(positions);
 			Vector<Noeud> solution = creerArbreBFS(positions);
-			BDI.updateIntention(solution);
-
-			if (BDI.updateDesir(solution.size(),testPerf(solution),capteur.perf())) {
+			
+			if (BDI.updateDesir(solution.size(), testPerf(solution))){
+				BDI.updateIntention(solution);
+				int a=capteur.perf();
 				effecteur.work(solution);
-				
+				int b= capteur.perf();
+				System.out.println("performance : " +(b-a));
+				if(sleepTime>perturbation) {
+					sleepTime -= perturbation;
+					if(perturbation/2 >1 && converge==false) perturbation= perturbation/2;
+					else {
+						perturbation=0;
+						converge=true;
+					}
+				}
+				else sleepTime+=perturbation;
+				System.out.println("temps de repos : "+sleepTime+ " perturbation : "+perturbation);
+			}
+			else {
+				System.out.println("Performance négative, le robot ne bouge pas");
+				perturbation+=5;
+				sleepTime+=perturbation;
 			}
 
 			try {
-				Thread.sleep(1000);
+				
+				Thread.sleep(sleepTime);
 
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block

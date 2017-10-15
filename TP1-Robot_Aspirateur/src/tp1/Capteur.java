@@ -33,11 +33,10 @@ public class Capteur {
 
 	public synchronized int perf() {
 		int i = Environnement.getPerf();
-		System.out.println("performance: " + i);
-		Environnement.setPerf();
+		//System.out.println("performance: " + i);
 		return i;
-
 	}
+	
 
 
 }

@@ -23,12 +23,8 @@ public class Effecteur {
 				aspire();
 				break;
 			}
-
 		}
-
-		//System.out.println("performance : " + Environnement.getPerf()); // enregistrer la perf
-		//Environnement.setPerf();
-
+		//System.out.println("performance : " + Environnement.getPerf());
 	}
 
 	public static void aspire() {
@@ -46,5 +42,8 @@ public class Effecteur {
 		Environnement.setY(y);
 		Environnement.addCout(cout);
 		// System.out.println("robot en "+x+" "+y);
+	}
+	public void resetPerf() {
+		Environnement.resetPerf();
 	}
 }

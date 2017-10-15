@@ -13,10 +13,10 @@ public class Etat {
 		
 	}
 
-	public boolean updateDesir(int elem, int eval, int perf) {
+	public boolean updateDesir(int nbElem, int distance) {
 		boolean choix = false;
-		int evalPerf = 9*(elem-1) - eval;
-		System.out.println("evaluation : "+evalPerf);
+		int evalPerf = 4*(nbElem-1) - distance;
+		//System.out.println("evaluation : "+evalPerf);
 		if (desir.isEmpty()) {
 			choix = true;
 			desir.add(evalPerf);
@@ -24,13 +24,13 @@ public class Etat {
 
 		else {
 
-			desir.add(perf);
-			if (evalPerf >= perf) {
+			desir.add(evalPerf);
+			if (evalPerf >=0 ) {
 
 				choix = true;
 			}
 		}
-		System.out.println("nb elements: " + (elem-1) + "\ndistance a parcourir: " + eval);
+		System.out.println("nb elements: " + (nbElem-1));// + "\ndistance a parcourir: " + eval);
 		return choix;
 	}
 

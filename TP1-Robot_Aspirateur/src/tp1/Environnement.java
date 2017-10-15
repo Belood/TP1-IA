@@ -1,6 +1,6 @@
 package tp1;
 
-import java.util.Arrays;
+
 import java.util.Random;
 
 public class Environnement implements Runnable {
@@ -82,17 +82,17 @@ public class Environnement implements Runnable {
 		case 1:
 			// System.out.println("bravo! poussiere ramassée");
 			carte[x][y] = 0;
-			performance += 10;
+			performance += 5;
 			break;
 		case 2:
 			// System.out.println("bijoux aspiré :/");
-			performance -= 10;
+			performance -= 100;
 			carte[x][y] = 0;
 			break;
 		case 3:
 			// System.out.println("de la poussiere et des bijoux ont été aspirés :/");
 			carte[x][y] = 0;
-			performance -= 10;
+			performance -= 100;
 			break;
 		}
 		performance--;
@@ -103,27 +103,21 @@ public class Environnement implements Runnable {
 	public static synchronized void testRamasse() {
 		// System.out.println(Arrays.deepToString(carte));
 		switch (carte[x][y]) {
-		case 0:
-			// System.out.println("Ramasse case vide");
-			performance--;
-			break;
-		case 1:
-			// System.out.println("ramassage de poussiere :/");
-			performance--;
-			carte[x][y] = 0;
-			break;
+		
 		case 2:
 			// System.out.println("bravo! bijoux ramassé");
 			carte[x][y] = 0;
-			performance += 10;
+			performance += 5;
 			break;
 		case 3:
 			// System.out.println("bravo! bijoux ramassé mais il reste de la poussiere");
-			performance += 10;
+			//performance += 5;
 			carte[x][y] = 1;
 			break;
+		default:
+			//performance--;
+			break;
 		}
-		performance--;
 		// System.out.println("cout :" + performance);
 		 //System.out.println(Arrays.deepToString(carte));
 	}
@@ -133,7 +127,8 @@ public class Environnement implements Runnable {
 
 	}
 
-	public static synchronized void setPerf() {
+	public static synchronized void resetPerf() {
+		
 		performance = 0;
 
 	}
