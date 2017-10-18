@@ -2,21 +2,23 @@ package tp1;
 
 import java.util.Vector;
 
+// Etat mental de l'agent
 public class Etat {
 	private Vector<Object> croyance = new Vector<Object>();
 	private Vector<Object> desir = new Vector<Object>();
 	private Vector<Noeud> intention = new Vector<Noeud>();
 
+	// mise a jour des croyances de l'agent
 	public void updateCroyance(Vector<Object> obs) {
 		croyance.clear();
 		croyance = obs;
-		
+
 	}
 
+	// mise a jour des desirs de l'agent
 	public boolean updateDesir(int nbElem, int distance) {
 		boolean choix = false;
-		int evalPerf = 4*(nbElem-1) - distance;
-		//System.out.println("evaluation : "+evalPerf);
+		int evalPerf = 4 * (nbElem - 1) - distance;
 		if (desir.isEmpty()) {
 			choix = true;
 			desir.add(evalPerf);
@@ -25,29 +27,26 @@ public class Etat {
 		else {
 
 			desir.add(evalPerf);
-			if (evalPerf >=0 ) {
+			if (evalPerf >= 0) {
 
 				choix = true;
 			}
 		}
-		System.out.println("nb elements: " + (nbElem-1));// + "\ndistance a parcourir: " + eval);
+		System.out.println("nombre d'elements: " + (nbElem - 1));
 		return choix;
 	}
 
-
+	// mise a jour des intentions de l'agent
 	public void updateIntention(Vector<Noeud> solution) {
-		this.intention=solution;
+		this.intention = solution;
 	}
-	
-	public Vector<Noeud> exprimerIntention(){
+
+	// Retourne une liste d'action
+	public Vector<Noeud> exprimerIntention() {
 		return this.intention;
 	}
 
-	/*
-	 * public void updateEtat(Vector<Object> obs) { updateCroyance(obs);
-	 * updateDesir(); updateIntention(); }
-	 */
-
+	// Retourne un vecteur contenant toutes les positions des elements de la carte
 	public Vector<Position> trouverPositionTruc() {
 		Vector<Position> liste_position = new Vector<Position>();
 		Position robot = new Position((int) croyance.get(1), (int) croyance.get(2), "Robot", 0, "0");
@@ -60,19 +59,16 @@ public class Etat {
 				case 1:
 					Position poussiere = new Position(i, j, "Poussiere", 0, Integer.toString(i) + Integer.toString(j));
 					liste_position.add(poussiere);
-					// System.out.println(poussiere.toString());
 					break;
 				case 2:
 					Position bijoux = new Position(i, j, "Bijoux", 0, Integer.toString(i) + Integer.toString(j));
 					liste_position.add(bijoux);
-					// System.out.println(bijoux.toString());
 					break;
 				case 3:
 					Position poussiereEtBijoux = new Position(i, j, "Poussiere et Bijoux", 0,
 							Integer.toString(i) + Integer.toString(j));
 					liste_position.add(poussiereEtBijoux);
 					break;
-				// System.out.println(poussiereEtBijoux.toString());
 				}
 			}
 		}

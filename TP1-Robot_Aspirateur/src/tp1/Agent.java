@@ -1,8 +1,9 @@
 package tp1;
 
-import java.util.Random;
+import java.util.Arrays;
 import java.util.Vector;
 
+// L'agent observe l'environnement et agit en conséquence
 public class Agent implements Runnable {
 	private Capteur capteur;
 	private Effecteur effecteur;
@@ -19,56 +20,63 @@ public class Agent implements Runnable {
 
 	@Override
 	public void run() {
-		/*
-		 * try { Thread.sleep(4000); } catch (InterruptedException e1) { // TODO
-		 * Auto-generated catch block e1.printStackTrace(); }
-		 */
+
 		int sleepTime = 0;
-		int perturbation=1000;
+		int perturbation = 1000;
 		boolean converge = false;
-		//int range=500;
 		while (isAlive) {
-			//System.out.println("plusOuMoins : " +plusOuMoins);
+
 			BDI.updateCroyance(capteur.observer());
 			Vector<Position> positions = BDI.trouverPositionTruc();
-			// Vector<Noeud> solution = creerArbre(positions);
-			Vector<Noeud> solution = creerArbreBFS(positions);
-			
-			if (BDI.updateDesir(solution.size(), testPerf(solution))){
+			Vector<Noeud> solution = creerArbreBFS(positions); // Utilisation de Best-First Search
+			// Vector<Noeud> solution = creerArbreDFS(positions); // Decommenter pour tester l'algorithme Deep-First Search
+
+			// L'agent ne travail que si c'est en accord avec ses desirs et si l'evaluation
+			// de sa performance est suffisante
+			if (BDI.updateDesir(solution.size(), testPerf(solution))) {
+				System.out.println("Environnement observé: " + Arrays.deepToString(capteur.carte()));
 				BDI.updateIntention(solution);
-				int a=capteur.perf();
+				int a = capteur.perf();
 				effecteur.work(solution);
-				int b= capteur.perf();
-				System.out.println("performance : " +(b-a));
-				if(sleepTime>perturbation) {
+				int b = capteur.perf();
+				System.out.println("performance : " + (b - a));
+				System.out.println("Environnement nettoyé: " + Arrays.deepToString(capteur.carte()));
+				;
+				if (sleepTime > perturbation) {
 					sleepTime -= perturbation;
-					if(perturbation/2 >1 && converge==false) perturbation= perturbation/2;
+					if (perturbation / 2 > 1 && converge == false)
+						perturbation = perturbation / 2;
 					else {
-						perturbation=0;
-						converge=true;
+						perturbation = 0;
+						converge = true;
 					}
+				} else {
+					sleepTime += perturbation;
 				}
-				else sleepTime+=perturbation;
-				System.out.println("temps de repos : "+sleepTime+ " perturbation : "+perturbation);
-			}
-			else {
-				System.out.println("Performance négative, le robot ne bouge pas");
-				perturbation+=5;
-				sleepTime+=perturbation;
+				System.out.println(
+						"temps de repos : " + sleepTime + " ms \n" + "perturbation : " + perturbation + " ms \n");
+
+			} else {
+				System.out.println("Environnement observé: " + Arrays.deepToString(capteur.carte()));
+				;
+				System.out.println("Performance négative, le robot ne bouge pas \n");
+				perturbation += 5;
+				sleepTime += perturbation;
 			}
 
 			try {
-				
-				Thread.sleep(sleepTime);
+
+				Thread.sleep(sleepTime); // Permet de modifier la frequence d'exploration jusqu'a converger vers une
+											// valeur optimale
 
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
 	}
 
+	// Retourne le cout de deplacement de l'agent pour une intention donnée
 	public int testPerf(Vector<Noeud> solution) {
 
 		int distance = 0;
@@ -78,6 +86,7 @@ public class Agent implements Runnable {
 		return distance;
 	}
 
+	// Deep-First Search
 	public Vector<Noeud> DFS(Noeud noeud, Vector<Position> positions, Vector<Position> addedPosition,
 			Vector<Noeud> solution) {
 
@@ -95,6 +104,7 @@ public class Agent implements Runnable {
 		return solution;
 	}
 
+	// Retourne le vecteur d'intention avec DFS
 	public Vector<Noeud> creerArbreDFS(Vector<Position> positions) {
 		Noeud racine = new Noeud(positions.get(0));
 		Vector<Position> addedPosition = new Vector<Position>();
@@ -105,6 +115,7 @@ public class Agent implements Runnable {
 		return solution;
 	}
 
+	// Best-First Search
 	public Vector<Noeud> BFS(Noeud noeud, Vector<Position> positions, Vector<Position> addedPosition,
 			Vector<Noeud> solution) {
 
@@ -125,7 +136,6 @@ public class Agent implements Runnable {
 			noeud.addEnfant(enfant);
 			addedPosition.add(positions.get(min));
 			solution.add(enfant);
-			// enfant.show();
 			BFS(enfant, positions, addedPosition, solution);
 
 		}
@@ -133,6 +143,7 @@ public class Agent implements Runnable {
 		return solution;
 	}
 
+	// Retourne le vecteur d'intention avec BFS
 	public Vector<Noeud> creerArbreBFS(Vector<Position> positions) {
 		Noeud racine = new Noeud(positions.get(0));
 		Vector<Position> addedPosition = new Vector<Position>();
@@ -142,31 +153,4 @@ public class Agent implements Runnable {
 		BFS(racine, positions, addedPosition, solution);
 		return solution;
 	}
-
-	// Algorithme exploration non informée, recherche en profondeur
-	/*
-	 * private void DFS(Arbre graph) { Stack<Arbre> stack = new Stack<Arbre>();
-	 * stack.push(graph); while (!stack.isEmpty()) { Arbre v = stack.pop(); Arbre
-	 * choix = v; if (!v.visited) { //System.out.println(graph.position.toString());
-	 * for (int n = 0; n < graph.neighbors.size(); n++) {
-	 * //System.out.println(graph.neighbors.get(n).position.toString()); // Affiche
-	 * les voisins du node // courant } v.visited = true; int min =
-	 * v.neighbors.get(0).position.getDistance(); for (int i = 0; i <
-	 * v.neighbors.size(); i++) { if (v.neighbors.get(i).position.getDistance() <
-	 * min) { choix = v.neighbors.get(i); // On enregistre le node le plus proche }
-	 * } choix.neighborsUpdate(); stack.push(choix); } } }
-	 * 
-	 * private void DFSReccursif(Arbre node) { node.visited = true; Arbre choix =
-	 * node; choix.neighborsUpdate(); int min =
-	 * node.neighbors.get(0).position.getDistance();
-	 * //System.out.println(choix.position.toString()); for (int i = 0; i <
-	 * node.neighbors.size(); i++) { if
-	 * (node.neighbors.get(i).position.getDistance() < min) { choix =
-	 * node.neighbors.get(i); // On enregistre le node le plus proche } }
-	 * 
-	 * DFSReccursif(choix); }
-	 * 
-	 * private void display(Vector<Arbre> graph) {
-	 * System.out.println(graph.get(0).position.toString()); }
-	 */
 }

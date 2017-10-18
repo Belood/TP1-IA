@@ -2,22 +2,20 @@ package tp1;
 
 import java.util.Vector;
 
+// Capteur de l'agent
 public class Capteur {
 
-	/*
-	 * static int getPerformance(Environnement env) { return env.getperformance(); }
-	 */
+	// Observe l'environnement. Retourne la carte, la position initial de l'agent et sa performance actuelle
 	public Vector<Object> observer() {
 		Vector<Object> obs = new Vector<Object>();
 		obs.add(carte());
-		// System.out.println(Arrays.deepToString(carte()));
 		obs.add(positionX());
 		obs.add(positionY());
 		obs.addElement(perf());
 		return obs;
 	}
 
-	private synchronized static int[][] carte() {
+	public synchronized int[][] carte() {
 		return Environnement.voirCarte();
 	}
 
@@ -30,13 +28,9 @@ public class Capteur {
 		return Environnement.getY();
 	}
 
-
 	public synchronized int perf() {
 		int i = Environnement.getPerf();
-		//System.out.println("performance: " + i);
 		return i;
 	}
-	
-
 
 }

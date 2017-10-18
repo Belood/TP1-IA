@@ -1,30 +1,26 @@
 package tp1;
 
-
 import java.util.Random;
+
+/*L'environnement genere des elements aleatoires dans une case aleatoire toutes les 10ms. 1 correspond à une poussiere, 2 à un bijoux et 3 aux deux. */
 
 public class Environnement implements Runnable {
 
-
-	private static int carte[][] = new int[10][10];
-	// private static int poussiere = 1;
-	// private static int bijoux = 2;
+	private static int carte[][] = new int[10][10]; // carte 10x10 initialement vide
 	private static int performance = 0;
-	private static int x = 0;
-	private static int y = 0;
+	private static int x = 0; /* position initial */
+	private static int y = 0; /* du robot */
 
 	public void run() {
 		while (true) {
 			genererElement(carte);
-			// testAspire();
-			// testRamasse();
+
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	
+
 		}
 	}
 
@@ -48,13 +44,12 @@ public class Environnement implements Runnable {
 		y = valeur;
 	}
 
+	// fonction permettant de generer des elements aleatoires.
 	public void genererElement(int[][] carte) {
 		Random ChoixCase = new Random();
 		int nb = ChoixCase.nextInt(10);
 		Random ChoixCase2 = new Random();
 		int nb2 = ChoixCase2.nextInt(10);
-		// setX(nb);
-		// setY(nb2);
 		Random element = new Random();
 		int elem = element.nextInt(2) + 1;
 		if (carte[nb][nb2] == 0) {
@@ -65,84 +60,72 @@ public class Environnement implements Runnable {
 
 	}
 
+	// le robot peut voir la carte à l'aide de ses capteurs.
 	public synchronized static int[][] voirCarte() {
 
-		//System.out.println(Arrays.deepToString(carte));
 		return carte;
 	}
 
+	// Le robot aspire l'element d'une case
 	public static synchronized void testAspire() {
-		//System.out.println(Arrays.deepToString(carte));
-		// System.out.println(Arrays.deepToString(carte));
 		switch (carte[x][y]) {
 		case 0:
-			// System.out.println("Aspire case vide");
+			// Aspire case vide
 			performance--;
 			break;
 		case 1:
-			// System.out.println("bravo! poussiere ramassée");
+			// poussiere aspirée
 			carte[x][y] = 0;
 			performance += 5;
 			break;
 		case 2:
-			// System.out.println("bijoux aspiré :/");
+			// bijoux aspiré
 			performance -= 100;
 			carte[x][y] = 0;
 			break;
 		case 3:
-			// System.out.println("de la poussiere et des bijoux ont été aspirés :/");
+			// de la poussiere et des bijoux ont été aspirés
 			carte[x][y] = 0;
 			performance -= 100;
 			break;
 		}
 		performance--;
-		// System.out.println("cout :" + performance);
-		 
+
 	}
 
+	// Le robot ramasse l'element d'une case
 	public static synchronized void testRamasse() {
-		// System.out.println(Arrays.deepToString(carte));
 		switch (carte[x][y]) {
-		
+
 		case 2:
-			// System.out.println("bravo! bijoux ramassé");
+			// bijoux ramassé
 			carte[x][y] = 0;
 			performance += 5;
 			break;
 		case 3:
-			// System.out.println("bravo! bijoux ramassé mais il reste de la poussiere");
-			//performance += 5;
+			// bijoux ramassé mais il reste de la poussiere
 			carte[x][y] = 1;
 			break;
 		default:
-			//performance--;
 			break;
 		}
-		// System.out.println("cout :" + performance);
-		 //System.out.println(Arrays.deepToString(carte));
 	}
 
+	// ajoute le cout de deplacement de l'intention du robot à l'indice de
+	// performance
 	public static void addCout(int cout2) {
 		performance -= cout2;
 
 	}
 
 	public static synchronized void resetPerf() {
-		
+
 		performance = 0;
 
 	}
 
-	
-	public  static synchronized int getPerformance() {
+	public static synchronized int getPerformance() {
 		return performance;
 	}
-	
-	
-	/*public static void main(String[] args) {
-		 
-		genererElement(carte);
-		System.out.println(Arrays.deepToString(carte));
 
-	}*/
 }

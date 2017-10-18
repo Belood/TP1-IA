@@ -1,11 +1,12 @@
 package tp1;
 
+// chaque element de la carte de l'environnement possede une position
 public class Position {
 	private String id;
 	private int x;
 	private int y;
 	private int distance;
-	private String objet; // 1 = Poussiere 2= Bijoux, 3=les deux
+	private String objet; // Poussiere, Bijoux ou les deux
 
 	public Position(int x, int y, String objet, int distance, String id) {
 		this.x = x;
@@ -14,7 +15,8 @@ public class Position {
 		this.distance = distance;
 		this.id = id;
 	}
-
+	
+	// Retourne la distance entre 2 positions
 	public int calculDistance(Position compare) {
 		return (Math.abs(this.x - compare.x) + Math.abs(this.y - compare.y));
 	}
@@ -42,7 +44,8 @@ public class Position {
 	public String getId() {
 		return this.id;
 	}
-
+	
+	// Test si 2 positions sont egales
 	public boolean equals(Position position) {
 		if (this.x == position.x && this.y == position.y) {
 			return true;

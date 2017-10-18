@@ -3,6 +3,7 @@ package tp1;
 import java.util.ArrayList;
 import java.util.List;
 
+// Classe permettant de creer l'arbre et notamment les noeuds pour la recherche informée et non informée.
 public class Noeud {
 	 public Position position;
 	 public Noeud parent;
