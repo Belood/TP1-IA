@@ -41,11 +41,6 @@ public class Etat {
 		this.intention = solution;
 	}
 
-	// Retourne une liste d'action
-	public Vector<Noeud> exprimerIntention() {
-		return this.intention;
-	}
-
 	// Retourne un vecteur contenant toutes les positions des elements de la carte
 	public Vector<Position> trouverPositionTruc() {
 		Vector<Position> liste_position = new Vector<Position>();

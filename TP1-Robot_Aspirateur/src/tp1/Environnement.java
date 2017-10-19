@@ -117,15 +117,4 @@ public class Environnement implements Runnable {
 		performance -= cout2;
 
 	}
-
-	public static synchronized void resetPerf() {
-
-		performance = 0;
-
-	}
-
-	public static synchronized int getPerformance() {
-		return performance;
-	}
-
 }

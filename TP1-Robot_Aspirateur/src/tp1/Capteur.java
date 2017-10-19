@@ -5,7 +5,8 @@ import java.util.Vector;
 // Capteur de l'agent
 public class Capteur {
 
-	// Observe l'environnement. Retourne la carte, la position initial de l'agent et sa performance actuelle
+	// Observe l'environnement. Retourne la carte, la position initial de l'agent et
+	// sa performance actuelle
 	public Vector<Object> observer() {
 		Vector<Object> obs = new Vector<Object>();
 		obs.add(carte());

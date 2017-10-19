@@ -15,7 +15,7 @@ public class Position {
 		this.distance = distance;
 		this.id = id;
 	}
-	
+
 	// Retourne la distance entre 2 positions
 	public int calculDistance(Position compare) {
 		return (Math.abs(this.x - compare.x) + Math.abs(this.y - compare.y));
@@ -44,7 +44,7 @@ public class Position {
 	public String getId() {
 		return this.id;
 	}
-	
+
 	// Test si 2 positions sont egales
 	public boolean equals(Position position) {
 		if (this.x == position.x && this.y == position.y) {

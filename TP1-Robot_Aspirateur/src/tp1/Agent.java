@@ -29,19 +29,20 @@ public class Agent implements Runnable {
 			BDI.updateCroyance(capteur.observer());
 			Vector<Position> positions = BDI.trouverPositionTruc();
 			Vector<Noeud> solution = creerArbreBFS(positions); // Utilisation de Best-First Search
-			// Vector<Noeud> solution = creerArbreDFS(positions); // Decommenter pour tester l'algorithme Deep-First Search
+			// Vector<Noeud> solution = creerArbreDFS(positions); // Decommenter pour tester
+			// l'algorithme Deep-First Search
 
 			// L'agent ne travail que si c'est en accord avec ses desirs et si l'evaluation
 			// de sa performance est suffisante
-			if (BDI.updateDesir(solution.size(), testPerf(solution))) {
+			int performanceProbable = testPerf(solution);
+			if (BDI.updateDesir(solution.size(), performanceProbable)) {
 				System.out.println("Environnement observé: " + Arrays.deepToString(capteur.carte()));
 				BDI.updateIntention(solution);
 				int a = capteur.perf();
 				effecteur.work(solution);
 				int b = capteur.perf();
-				System.out.println("performance : " + (b - a));
+				System.out.println("Gain de performance itération courante: " + (b - a));
 				System.out.println("Environnement nettoyé: " + Arrays.deepToString(capteur.carte()));
-				;
 				if (sleepTime > perturbation) {
 					sleepTime -= perturbation;
 					if (perturbation / 2 > 1 && converge == false)
@@ -58,7 +59,6 @@ public class Agent implements Runnable {
 
 			} else {
 				System.out.println("Environnement observé: " + Arrays.deepToString(capteur.carte()));
-				;
 				System.out.println("Performance négative, le robot ne bouge pas \n");
 				perturbation += 5;
 				sleepTime += perturbation;

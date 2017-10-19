@@ -38,8 +38,4 @@ public class Effecteur {
 		Environnement.setY(y);
 		Environnement.addCout(cout);
 	}
-
-	public synchronized void resetPerf() {
-		Environnement.resetPerf();
-	}
 }
